@@ -4,11 +4,20 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+  'myApp.login'
+])
+.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
+}])
+.config(['$routeProvider', function ($routeProvider) {
+  $routeProvider
+  .when('/view1', {
+    templateUrl: 'view1/view1.html',
+    controller: 'View1Ctrl'
+  })
+  .when('/login', {
+    templateUrl: 'login/login.html',
+    controller: 'LoginCtrl'
+  })
+  .otherwise({redirectTo: '/view1'});
 }]);
