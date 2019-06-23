@@ -9,21 +9,19 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
 @Entity
-@Table(name = "users")
+@Data
+@Table(name="users")
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	
-	@Column(name = "username", nullable = false)
-	private String userName;
-	
-	@Column(name = "password", nullable = false)
-	private String password;
-	
-	@Column(name = "enabled", nullable = false)
-	private String enabled;
-
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+ 
+    @Column(nullable = false, unique = true)
+    private String username;
+ 
+    private String password;
+ 
+    //standard getters and setters
 }

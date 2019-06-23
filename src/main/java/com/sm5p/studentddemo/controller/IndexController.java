@@ -18,17 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1")
-public class StudentController {
-	
+@RequestMapping("/public")
+public class IndexController {
+    
     @Autowired
-    private StudentRepository studentRepository;
+    private UserRepository userRepository;
 
-    @PostMapping("/students")
-    public Student createStudent(@Valid @RequestBody Student student) {
-    	log.info("save student: ");
-
-        return studentRepository.save(student);
+    @PostMapping("/register")
+    public User registerUser(@Valid @RequestBody User user) {
+    	log.info("register user: ");
+    	String encodedPassword = new BCryptPasswordEncoder(11).encode(user.getPassword());
+    	user.setPassword(encodedPassword);
+        return userRepository.save(user);
     }
+
 
 }
