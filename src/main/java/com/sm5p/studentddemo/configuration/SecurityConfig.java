@@ -1,7 +1,6 @@
 package com.sm5p.studentddemo.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.sm5p.studentddemo.service.MyUserDetailsService;
 
@@ -23,16 +23,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// TODO Auto-generated method stub
-//		auth
-//		.inMemoryAuthentication()
-//			.withUser("hvp").password("{noop}asdf1234?").roles("USER1")	
-		
 		auth
-		.authenticationProvider(authenticationProvider())
-			;
-	}
+		.inMemoryAuthentication()
+			.withUser("hvp").password("{noop}asdf1234???12").roles("USER1");
+		auth
+			.authenticationProvider(authenticationProvider());
 		
-	@Bean
+	}
+	
 	public DaoAuthenticationProvider authenticationProvider() {
 	    DaoAuthenticationProvider authProvider
 	      = new DaoAuthenticationProvider();
@@ -41,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    return authProvider;
 	}
 	
-	@Bean
 	public PasswordEncoder encoder() {
 	    return new BCryptPasswordEncoder(11);
 	}
@@ -60,6 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logout()
 			.permitAll()
 		.and()
-			.csrf().disable();
+			.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 }
